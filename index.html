@@ -30,7 +30,8 @@
 <p>El responsable de tus datos es Daniel Dominguez, desarrollador independiente de la app. Contacto: <a href="mailto:dominguezdanieldev@gmail.com">dominguezdanieldev@gmail.com</a>.</p>
 
 <h3>Lo que no hacemos</h3>
-<p>La app no tiene cuentas, anuncios ni herramientas de analítica, y no vende ningún dato. Para jugar y grabar voces no se conecta a internet.</p>
+<p>La app no tiene cuentas, anuncios ni herramientas de analítica, y no vende ningún dato. Para jugar y grabar voces no se conecta a internet; solo se conecta cuando envías o abres un enlace, o para retirar enlaces que compartiste.</p>
+<p>La app se distribuye por el App Store de Apple y Google Play; sus propias políticas de privacidad aplican a la descarga y actualización.</p>
 
 <h3>Micrófono y grabaciones</h3>
 <p>La app pide permiso para usar el micrófono solo cuando tú decides grabar tu voz para una carta. Las grabaciones se guardan en tu teléfono, dentro del almacenamiento privado de la app, y solo se usan para cantar las cartas en tu juego.</p>
@@ -39,17 +40,18 @@
 <p>Si eliges <em>Enviar archivo</em>, la app crea un archivo <code>.loteriavoz</code> con tus grabaciones y el nombre de la voz, y lo entrega al menú de compartir de tu teléfono. Tú eliges a quién y por qué app enviarlo; nosotros no lo recibimos. Al abrir un archivo <code>.loteriavoz</code> que alguien te mandó, la voz se guarda en tu teléfono igual que las tuyas.</p>
 
 <h3>Compartir voces con un enlace</h3>
-<p>Desde la versión 5.1 puedes elegir <em>Enviar enlace</em>. Así funciona:</p>
+<p>Desde la versión 5.1 en iPhone y iPad (y en Android cuando esa versión esté disponible) puedes elegir <em>Enviar enlace</em>. Así funciona:</p>
 <ul>
-  <li>Tu teléfono cifra la voz (sus grabaciones y su nombre) con una llave nueva que solo existe dentro del enlace. Esa llave nunca llega a ningún servidor.</li>
-  <li>El archivo cifrado se guarda en un servidor de Cloudflare, Inc., que nos presta el servicio de almacenamiento. Ni Cloudflare ni nosotros podemos escuchar la voz: sin la llave del enlace, el archivo no se puede leer.</li>
-  <li>Para evitar abusos, el servidor recibe temporalmente datos técnicos de cada conexión, como tu dirección IP, la hora y el tamaño del archivo. No los usamos para identificarte ni los guardamos.</li>
+  <li>Tu teléfono cifra la voz (sus grabaciones, su nombre y las fechas de grabación) con una llave nueva que solo existe dentro del enlace. Esa llave nunca llega a ningún servidor.</li>
+  <li>El archivo cifrado se guarda en un servidor de Cloudflare, Inc., que nos presta el servicio de almacenamiento. Sin la llave del enlace, el archivo guardado no se puede leer: ni Cloudflare ni nosotros podemos escucharlo.</li>
+  <li>Cloudflare actúa como encargado nuestro y procesa el archivo cifrado y los datos de conexión en servidores fuera de México (principalmente en Estados Unidos). No transferimos tus datos a ningún otro tercero.</li>
+  <li>Para evitar abusos, el servidor usa temporalmente datos técnicos de cada conexión (dirección IP, hora, tamaño del archivo). Nosotros no los guardamos ni los usamos para identificarte; Cloudflare puede conservarlos brevemente en sus registros de seguridad (normalmente hasta 24 horas).</li>
   <li>Cualquier persona que tenga el enlace puede descargar y escuchar la voz, incluida la app de mensajes por la que lo envíes. Comparte el enlace solo con quien quieras.</li>
   <li>El enlace deja de funcionar a los 30 días y el archivo cifrado se borra automáticamente, normalmente dentro del día siguiente.</li>
-  <li>Puedes borrarlo antes con <em>Dejar de compartir</em>, en el teléfono desde el que lo compartiste. Si reinstalas la app o cambias de teléfono, esa opción se pierde, pero el enlace igual caduca a los 30 días. También puedes escribirnos con el enlace completo y lo borramos.</li>
+  <li>Puedes borrarlo antes con <em>Dejar de compartir</em>, en el teléfono desde el que lo compartiste (la app guarda ahí una clave de borrado, que no se respalda ni se transfiere a otro teléfono). Si cambias de teléfono, esa opción puede perderse, pero el enlace igual caduca a los 30 días. También puedes escribirnos con el enlace completo y lo borramos.</li>
   <li>Borrar un enlace no puede recuperar las copias que alguien ya haya importado en su teléfono.</li>
 </ul>
-<p>Al abrir un enlace que te mandaron, la app descarga el archivo cifrado, lo descifra en tu teléfono y te pregunta antes de importar la voz.</p>
+<p>Al abrir un enlace que te mandaron, la app descarga el archivo cifrado, lo descifra en tu teléfono y te pregunta antes de importar la voz. Si no tienes la app, el enlace se abre en loteriatradicional.net, donde tu navegador descarga el archivo cifrado y lo descifra ahí mismo; la llave no sale de la página.</p>
 
 <h3>Uso aceptable</h3>
 <p>No uses los enlaces para compartir contenido ilegal, acosar a nadie ni publicar la voz de otra persona sin su permiso. Si recibes un enlace con contenido indebido, escríbenos con el enlace completo (“Reportar abuso” en la app). Borramos el contenido que infrinja estas reglas y, cuando la ley lo exige, lo reportamos a las autoridades.</p>
@@ -79,7 +81,8 @@
 <p>Your data is the responsibility of Daniel Dominguez, the app’s independent developer. Contact: <a href="mailto:dominguezdanieldev@gmail.com">dominguezdanieldev@gmail.com</a>.</p>
 
 <h3>What we don’t do</h3>
-<p>The app has no accounts, ads or analytics, and it doesn’t sell any data. Playing and recording voices don’t use the internet.</p>
+<p>The app has no accounts, ads or analytics, and it doesn’t sell any data. Playing and recording voices don’t use the internet; the app only connects when you send or open a link, or to withdraw links you shared.</p>
+<p>The app is distributed through Apple’s App Store and Google Play; their own privacy policies apply to downloads and updates.</p>
 
 <h3>Microphone and recordings</h3>
 <p>The app asks for microphone access only when you choose to record your voice for a card. Recordings are stored on your phone, in the app’s private storage, and are used only to call the cards in your game.</p>
@@ -88,17 +91,18 @@
 <p>If you choose <em>Enviar archivo</em> (Send file), the app creates a <code>.loteriavoz</code> file with your recordings and the voice’s name and hands it to your phone’s share menu. You choose who gets it and through which app; we never receive it. When you open a <code>.loteriavoz</code> file someone sent you, the voice is saved on your phone just like your own.</p>
 
 <h3>Sharing voices as a link</h3>
-<p>From version 5.1 you can choose <em>Enviar enlace</em> (Send link). This is how it works:</p>
+<p>From version 5.1 on iPhone and iPad (and on Android once that version is available) you can choose <em>Enviar enlace</em> (Send link). This is how it works:</p>
 <ul>
-  <li>Your phone encrypts the voice (its recordings and its name) with a new key that exists only inside the link. That key never reaches any server.</li>
-  <li>The encrypted file is stored on a server run by Cloudflare, Inc., which provides the storage service. Neither Cloudflare nor we can listen to the voice: without the link’s key, the file can’t be read.</li>
-  <li>To prevent abuse, the server briefly receives technical data about each connection, such as your IP address, the time and the file size. We don’t use it to identify you and we don’t keep it.</li>
+  <li>Your phone encrypts the voice (its recordings, its name and recording dates) with a new key that exists only inside the link. That key never reaches any server.</li>
+  <li>The encrypted file is stored on a server run by Cloudflare, Inc., which provides the storage service. Without the link’s key the stored file can’t be read: neither Cloudflare nor we can listen to it.</li>
+  <li>Cloudflare acts as our processor and handles the encrypted file and connection data on servers outside Mexico (mainly in the United States). We don’t transfer your data to anyone else.</li>
+  <li>To prevent abuse, the server briefly uses technical data about each connection (IP address, time, file size). We don’t keep it or use it to identify you; Cloudflare may hold it briefly in its own security logs (normally up to 24 hours).</li>
   <li>Anyone who has the link can download and listen to the voice, including the messaging app you send it through. Only share the link with people you choose.</li>
   <li>The link stops working after 30 days and the encrypted file is deleted automatically, normally within a day after that.</li>
-  <li>You can delete it sooner with <em>Dejar de compartir</em> (Stop sharing) on the phone you shared it from. If you reinstall the app or change phones, that option is lost, but the link still expires after 30 days. You can also email us the full link and we’ll delete it.</li>
+  <li>You can delete it sooner with <em>Dejar de compartir</em> (Stop sharing) on the phone you shared it from (the app keeps a delete key there, which is not backed up or transferred to another phone). If you change phones, that option may be lost, but the link still expires after 30 days. You can also email us the full link and we’ll delete it.</li>
   <li>Deleting a link can’t recall copies someone has already imported on their phone.</li>
 </ul>
-<p>When you open a link someone sent you, the app downloads the encrypted file, decrypts it on your phone and asks you before importing the voice.</p>
+<p>When you open a link someone sent you, the app downloads the encrypted file, decrypts it on your phone and asks you before importing the voice. If you don’t have the app, the link opens on loteriatradicional.net, where your browser downloads the encrypted file and decrypts it right there; the key never leaves the page.</p>
 
 <h3>Acceptable use</h3>
 <p>Don’t use links to share illegal content, harass anyone, or publish someone else’s voice without their permission. If you receive a link with inappropriate content, email us the full link (“Reportar abuso” in the app). We delete content that breaks these rules and, where the law requires it, report it to the authorities.</p>
@@ -109,7 +113,7 @@
 <h3>Deleting your data</h3>
 <p>You can delete a voice from the Voces screen. Uninstalling the app deletes all recordings it stored on your phone. Links you shared expire on their own after 30 days.</p>
 
-<h3>Your rights</h3>
+<h3>Your rights (ARCO)</h3>
 <p>You can ask us to access, correct, delete or object to the processing of your data by emailing <a href="mailto:dominguezdanieldev@gmail.com">dominguezdanieldev@gmail.com</a>. Because the app doesn’t keep your data on our servers, in practice this applies to shared links: send us the link and we’ll delete it.</p>
 
 <h3>Children</h3>
