@@ -25,6 +25,9 @@ grep -q 'id="barajas"' <<<"$PAGE" || fail "no Más barajas section (es)"
 grep -q 'id="decks"' <<<"$PAGE" || fail "no Más barajas section (en)"
 grep -q "solo se conecta cuando envías" <<<"$PAGE" && fail "still says it only connects for links (es)"
 grep -q "only connects when you send" <<<"$PAGE" && fail "still says it only connects for links (en)"
+# The Worker counts deck download starts: say so plainly (no "no analytics" claim that hides it).
+grep -q "cuántas veces se empieza a descargar cada baraja" <<<"$PAGE" || fail "download counting not described (es)"
+grep -q "how many times each deck starts downloading" <<<"$PAGE" || fail "download counting not described (en)"
 # Nothing loaded from another origin (scripts, styles, fonts, images, frames).
 if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"$PAGE"; then fail "third-party resource"; fi
 # Outbound links only to the stores and our own domain.
