@@ -19,7 +19,12 @@ grep -q "ARCO" <<<"$PAGE" || fail "no ARCO rights section"
 grep -q "iPhone" <<<"$PAGE" || fail "iOS app not covered"
 grep -q "Android" <<<"$PAGE" || fail "Android app not covered"
 grep -q "5.1" <<<"$PAGE" || fail "link sharing not tied to a version"
-grep -q "30 de septiembre de 2026" <<<"$PAGE" || fail "effective date not updated"
+grep -q "5 de octubre de 2026" <<<"$PAGE" || fail "effective date not updated"
+# 5.5: the apps list and download card decks ("Más barajas") — say so in both languages.
+grep -q 'id="barajas"' <<<"$PAGE" || fail "no Más barajas section (es)"
+grep -q 'id="decks"' <<<"$PAGE" || fail "no Más barajas section (en)"
+grep -q "solo se conecta cuando envías" <<<"$PAGE" && fail "still says it only connects for links (es)"
+grep -q "only connects when you send" <<<"$PAGE" && fail "still says it only connects for links (en)"
 # Nothing loaded from another origin (scripts, styles, fonts, images, frames).
 if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"$PAGE"; then fail "third-party resource"; fi
 # Outbound links only to the stores and our own domain.
