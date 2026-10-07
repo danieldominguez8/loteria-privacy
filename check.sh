@@ -19,7 +19,7 @@ grep -q "ARCO" <<<"$PAGE" || fail "no ARCO rights section"
 grep -q "iPhone" <<<"$PAGE" || fail "iOS app not covered"
 grep -q "Android" <<<"$PAGE" || fail "Android app not covered"
 grep -q "5.1" <<<"$PAGE" || fail "link sharing not tied to a version"
-grep -q "5 de octubre de 2026" <<<"$PAGE" || fail "effective date not updated"
+grep -q "7 de octubre de 2026" <<<"$PAGE" || fail "effective date not updated"
 # 5.5: the apps list and download card decks ("Más barajas") — say so in both languages.
 grep -q 'id="barajas"' <<<"$PAGE" || fail "no Más barajas section (es)"
 grep -q 'id="decks"' <<<"$PAGE" || fail "no Más barajas section (en)"
@@ -28,6 +28,9 @@ grep -q "only connects when you send" <<<"$PAGE" && fail "still says it only con
 # The Worker counts deck download starts: say so plainly (no "no analytics" claim that hides it).
 grep -q "cuántas veces se empieza a descargar cada baraja" <<<"$PAGE" || fail "download counting not described (es)"
 grep -q "how many times each deck starts downloading" <<<"$PAGE" || fail "download counting not described (en)"
+# Daily totals per deck version are kept past the ~3 months (loteria-links cron → private R2).
+grep -q "el total de descargas iniciadas por día de cada baraja, versión y catálogo" <<<"$PAGE" || fail "daily totals not described (es)"
+grep -q "each deck version's total download starts per day, by catalog" <<<"$PAGE" || fail "daily totals not described (en)"
 # Nothing loaded from another origin (scripts, styles, fonts, images, frames).
 if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"$PAGE"; then fail "third-party resource"; fi
 # Outbound links only to the stores and our own domain.
