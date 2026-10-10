@@ -38,8 +38,13 @@ grep -q "Nosotros nunca las recibimos" <<<"$PAGE" || fail "photos-stay-on-phone 
 grep -q "We never receive them" <<<"$PAGE" || fail "photos-stay-on-phone not stated (en)"
 grep -q "PDF con tablas que incluye tus fotos" <<<"$PAGE" || fail "PDF share not described (es)"
 grep -q "PDF of tablas that includes your photos" <<<"$PAGE" || fail "PDF share not described (en)"
-grep -q "Android 12 o más nuevo" <<<"$PAGE" || fail "device transfer not scoped to Android 12+ (es)"
+grep -q "Android 12 o posterior" <<<"$PAGE" || fail "device transfer not scoped to Android 12+ (es)"
 grep -q "Android 12 or newer" <<<"$PAGE" || fail "device transfer not scoped to Android 12+ (en)"
+# The page must not claim photos stay "only" on the phone: backups and transfers copy them too.
+grep -q "se quedan solo en tu teléfono" <<<"$PAGE" && fail "says photos stay only on the phone (es); backups copy them"
+grep -q "stay only on your phone" <<<"$PAGE" && fail "says photos stay only on the phone (en); backups copy them"
+grep -q 'id="respaldos"' <<<"$PAGE" || fail "no #respaldos anchor"
+grep -q 'id="backups"' <<<"$PAGE" || fail "no #backups anchor"
 # Nothing loaded from another origin (scripts, styles, fonts, images, frames).
 if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"$PAGE"; then fail "third-party resource"; fi
 # Outbound links only to the stores and our own domain.
