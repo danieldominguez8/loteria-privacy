@@ -16,6 +16,10 @@ grep -qi "we have no servers" <<<"$PAGE" && fail "still says 'we have no servers
 grep -q 'id="soporte"' <<<"$PAGE" || fail "no #soporte section"
 grep -q 'id="support"' <<<"$PAGE" || fail "no #support section"
 grep -q "ARCO" <<<"$PAGE" || fail "no ARCO rights section"
+# 2026-10-26: the stores call the app "Lotería Mexicana Tradicional"; the page says so, and names the old name once per language.
+grep -q "<h1>Lotería Mexicana Tradicional</h1>" <<<"$PAGE" || fail "heading not the store name"
+grep -q "antes Lotería Tradicional" <<<"$PAGE" || fail "old name not mentioned (es)"
+grep -q "formerly Lotería Tradicional" <<<"$PAGE" || fail "old name not mentioned (en)"
 grep -q "iPhone" <<<"$PAGE" || fail "iOS app not covered"
 grep -q "Android" <<<"$PAGE" || fail "Android app not covered"
 grep -q "5.1" <<<"$PAGE" || fail "link sharing not tied to a version"
