@@ -5,7 +5,7 @@
 set -euo pipefail
 fail() { echo "FAIL: $1" >&2; exit 1; }
 if [[ "${1:-}" == --live ]]; then
-  PAGE=$(curl -fsS https://danieldominguez8.github.io/loteria-privacy/)
+  PAGE=$(curl -fsS https://danieldominguez8.github.io/loteria-privacy/) || fail "privacy page not reachable"
   TERMS=$(curl -fsS https://danieldominguez8.github.io/loteria-privacy/terms.html) || fail "terms page not published"
 else
   PAGE=$(cat "$(dirname "$0")/index.html")
