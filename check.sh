@@ -3,12 +3,14 @@
 #   ./check.sh            # the local index.html
 #   ./check.sh --live     # the published page
 set -euo pipefail
+fail() { echo "FAIL: $1" >&2; exit 1; }
 if [[ "${1:-}" == --live ]]; then
   PAGE=$(curl -fsS https://danieldominguez8.github.io/loteria-privacy/)
+  TERMS=$(curl -fsS https://danieldominguez8.github.io/loteria-privacy/terms.html) || fail "terms page not published"
 else
   PAGE=$(cat "$(dirname "$0")/index.html")
+  TERMS=$(cat "$(dirname "$0")/terms.html")
 fi
-fail() { echo "FAIL: $1" >&2; exit 1; }
 grep -q "enlace" <<<"$PAGE" || fail "no voice-link section (es)"
 grep -q "Cloudflare" <<<"$PAGE" || fail "Cloudflare not named as processor"
 grep -q "no tenemos servidores" <<<"$PAGE" && fail "still says 'no tenemos servidores'"
@@ -51,12 +53,40 @@ grep -q "se quedan solo en tu teléfono" <<<"$PAGE" && fail "says photos stay on
 grep -q "stay only on your phone" <<<"$PAGE" && fail "says photos stay only on the phone (en); backups copy them"
 grep -q 'id="respaldos"' <<<"$PAGE" || fail "no #respaldos anchor"
 grep -q 'id="backups"' <<<"$PAGE" || fail "no #backups anchor"
-# Nothing loaded from another origin (scripts, styles, fonts, images, frames).
-if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"$PAGE"; then fail "third-party resource"; fi
-# Outbound links only to the stores and our own domain.
-bad=$(grep -Eo '(src|href)="https?://[^"]+"' <<<"$PAGE" | grep -Ev 'https://(apps\.apple\.com|play\.google\.com|loteriatradicional\.net)' || true)
-[[ -z "$bad" ]] || fail "unexpected outbound link: $bad"
+# 2026-11-05: the TV version (Apple TV, Google TV/Android TV, Fire TV, Roku, LG). Apple TV, Roku and LG are offline
+# and collect nothing; the Android-based TVs run the Android app, whose startup fetches the deck list
+# (LoteriaApp.loadDecks -> deckStore -> refreshCatalogs), so the page must not call those offline.
+grep -q 'id="tele"' <<<"$PAGE" || fail "no TV section (es)"
+grep -q 'id="tv"' <<<"$PAGE" || fail "no TV section (en)"
+grep -q "En Apple TV, Roku y LG no recopila ningún dato y no se conecta a internet" <<<"$PAGE" || fail "offline TVs not stated (es)"
+grep -q "On Apple TV, Roku and LG it collects no data and doesn’t connect to the internet" <<<"$PAGE" || fail "offline TVs not stated (en)"
+grep -q "al abrirse pide la lista de barajas disponibles, igual que en el teléfono" <<<"$PAGE" || fail "Android TV deck-list fetch not disclosed (es)"
+grep -q "when the app starts it asks for the list of available decks, just as on a phone" <<<"$PAGE" || fail "Android TV deck-list fetch not disclosed (en)"
+grep -Eq "(Google TV|Android TV|Fire TV)[^.<]*no se conecta a internet" <<<"$PAGE" && fail "says an Android-based TV is offline (es)"
+grep -Eq "(Google TV|Android TV|Fire TV)[^.<]*doesn’t connect to the internet" <<<"$PAGE" && fail "says an Android-based TV is offline (en)"
+grep -q "y la versión para la tele también por las tiendas de Amazon, Roku y LG" <<<"$PAGE" || fail "TV stores not in the distribution sentence (es)"
+grep -q "and the TV version also through the Amazon, Roku and LG stores" <<<"$PAGE" || fail "TV stores not in the distribution sentence (en)"
+grep -q "Actualizado el 5 de noviembre de 2026: se agrega la versión para la tele" <<<"$PAGE" || fail "TV update not dated (es)"
+grep -q "Updated November 5, 2026: adds the TV version" <<<"$PAGE" || fail "TV update not dated (en)"
+# The terms page (the TV stores require a terms URL): linked both ways, both languages, anchors it links to exist.
+grep -Fq 'href="terms.html"' <<<"$PAGE" || fail "privacy page doesn't link the terms"
+grep -q 'id="uso-aceptable"' <<<"$PAGE" || fail "no #uso-aceptable anchor"
+grep -q 'id="acceptable-use"' <<<"$PAGE" || fail "no #acceptable-use anchor"
+grep -q "<h1>Lotería Mexicana Tradicional</h1>" <<<"$TERMS" || fail "terms heading not the store name"
+grep -q '<h2 id="es">Términos de uso</h2>' <<<"$TERMS" || fail "no Spanish terms"
+grep -q '<h2 id="en">Terms of use</h2>' <<<"$TERMS" || fail "no English terms"
+grep -Fq 'href="./"' <<<"$TERMS" || fail "terms don't link the privacy page"
+for anchor in uso-aceptable acceptable-use respaldos backups; do
+  grep -Fq "href=\"./#$anchor\"" <<<"$TERMS" || fail "terms don't link #$anchor"
+done
+for doc in PAGE TERMS; do
+  # Nothing loaded from another origin (scripts, styles, fonts, images, frames).
+  if grep -Eoi '<(script|link|img|iframe)[^>]+(src|href)="https?://' <<<"${!doc}"; then fail "third-party resource ($doc)"; fi
+  # Outbound links only to the stores and our own domain.
+  bad=$(grep -Eo '(src|href)="https?://[^"]+"' <<<"${!doc}" | grep -Ev '^(src|href)="https://(apps\.apple\.com|play\.google\.com|loteriatradicional\.net)(/|")' || true)
+  [[ -z "$bad" ]] || fail "unexpected outbound link ($doc): $bad"
+done
 if [[ "${1:-}" != --live ]]; then
-  (cd "$(dirname "$0")" && npx --yes html-validate@9 index.html >/dev/null) || fail "html-validate"
+  (cd "$(dirname "$0")" && npx --yes html-validate@9 index.html terms.html >/dev/null) || fail "html-validate"
 fi
 echo "policy checks: all passed"
